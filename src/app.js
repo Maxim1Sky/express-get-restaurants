@@ -23,7 +23,9 @@ app.post("/restaurants", async (req, res) => {
   console.log(req.body);
 
   const newRest = await Restaurant.create(req.body);
-  res.send(newRest);
+  //res.send(newRest);
+  const newDatabase = await Restaurant.findAll();
+  res.json(newDatabase);
 
   console.log("Post works!");
 });

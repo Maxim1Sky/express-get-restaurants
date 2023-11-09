@@ -61,6 +61,7 @@ test("Should add a record to the database +1", async () => {
   expect(response.body.length).toEqual(restQuantity + 1);
 });
 
+// Comment these last 2 test and run npx test to get the databse back to normal
 test("Should update a restaurant", async () => {
   await request(app).put("/restaurants/4").send({
     name: "Updated Name",

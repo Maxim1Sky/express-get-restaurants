@@ -16,16 +16,6 @@ app.get("/restaurants", async (req, res) => {
     include: [{ model: Menu, include: [{ model: Item }] }],
   });
   res.json(allRest);
-
-  //   {
-  //     include: Mode1, //Which model should we add here?
-  //     include: [{
-  //        model: Mode1,
-  //        include: [{
-  //            model: Model2 //Which model should we add here?
-  //        }]
-  //     }]
-  // }
 });
 
 app.get("/restaurants/:id", async (req, res) => {

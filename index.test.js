@@ -79,3 +79,12 @@ test("Should detele entry by ID", async () => {
   expect(allRest.length).toEqual(restQuantity);
   expect(allRest[1].id).not.toEqual(2);
 });
+
+test("Should return an error when no parameters are passed in", async () => {
+  const result = await request(app).post("/restaurants").send({
+    name: "Random",
+  });
+
+  expect(result.body).toHaveProperty("error");
+  expect(Array.isArray(result.body.error)).toBe(true);
+});

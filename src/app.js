@@ -3,6 +3,8 @@ const app = express();
 const Restaurant = require("../models/index");
 const db = require("../db/connection");
 
+const { check, validationResult } = require("express-validator");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -19,15 +21,20 @@ app.get("/restaurants/:id", async (req, res) => {
   res.json(theRecord);
 });
 
-app.post("/restaurants", async (req, res) => {
+const theCheck = [check(["name", "location", "cuisine"]).notEmpty().trim()];
+app.post("/restaurants", theCheck, async (req, res) => {
   console.log(req.body);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.json({ error: errors.array() });
+  } else {
+    const newRest = await Restaurant.create(req.body);
+    //res.send(newRest);
+    const newDatabase = await Restaurant.findAll();
+    res.json(newDatabase);
 
-  const newRest = await Restaurant.create(req.body);
-  //res.send(newRest);
-  const newDatabase = await Restaurant.findAll();
-  res.json(newDatabase);
-
-  console.log("Post works!");
+    console.log("Post works!");
+  }
 });
 
 app.put("/restaurants/:id", async (req, res) => {

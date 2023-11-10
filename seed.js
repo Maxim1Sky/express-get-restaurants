@@ -1,4 +1,7 @@
-const { Restaurant, Menu, Item } = require("./models/index");
+// const { Restaurant, Menu, Item } = require("./models/index");
+const Restaurant = require("./models/Restaurant");
+const Menu = require("./models/Menu");
+const Item = require("./models/Item");
 const { seedRestaurant, seedMenu, seedItem } = require("./seedData");
 const db = require("./db/connection");
 
@@ -10,6 +13,6 @@ const syncSeed = async () => {
   await Item.bulkCreate(seedItem);
 };
 
-syncSeed();
+//syncSeed();
 
 module.exports = syncSeed;

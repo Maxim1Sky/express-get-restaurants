@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const Restaurant = require("../models/index");
+const { Restaurant, Menu, Item } = require("../models/index");
 const db = require("../db/connection");
 
 const { check, validationResult } = require("express-validator");
@@ -11,8 +11,21 @@ app.use(express.urlencoded({ extended: true }));
 //TODO: Create your GET Request Route Below:
 
 app.get("/restaurants", async (req, res) => {
-  const allRest = await Restaurant.findAll();
+  const allRest = await Restaurant.findAll({
+    include: Menu,
+    include: [{ model: Menu, include: [{ model: Item }] }],
+  });
   res.json(allRest);
+
+  //   {
+  //     include: Mode1, //Which model should we add here?
+  //     include: [{
+  //        model: Mode1,
+  //        include: [{
+  //            model: Model2 //Which model should we add here?
+  //        }]
+  //     }]
+  // }
 });
 
 app.get("/restaurants/:id", async (req, res) => {
